@@ -1,0 +1,14 @@
+* Startup
+** loading scripts
+   Parameter `-...x` controls execution of specific script: before or after `~/.gdbinit`, before or after loading the program
+   `set auto-load local-gdbinit` -- permits to load local scripts
+   
+* Logging
+  Most useful:
+  - `set logging on`
+  - `set logging file ...`
+  - `show logging`
+
+* Printing
+  Apostrofe before function name might be useful in templates:
+  `p \`func<...`
