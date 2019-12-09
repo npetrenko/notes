@@ -1,0 +1,18 @@
+* Optimization attributes
+** Per-function levels
+   One might disable function optimization by :
+   #+BEGIN_SRC c++
+   template <...>
+   __attribute__((optnone))
+   void do();
+   #+END_SRC
+** Noinline
+   #+BEGIN_SRC c++
+   __attribute__((noinline))
+   void do();
+   #+END_SRC
+* Disasm
+** Single function
+   #+BEGIN_SRC bash
+   gdb -batch -ex "file obj.cpp.o" -ex "disassemble 'FuncName'"
+   #+END_SRC
