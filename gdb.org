@@ -14,3 +14,80 @@
 
 * Printing
   Apostrofe before function name might be useful in templates: ~p \`func<...~
+* DWARF
+  One can enable DWARF with =-g3= -- manual suggests that it is the best format for debugging
+
+  Alternative: =-ggdb=
+  
+* Already running
+  ~attach pid~ attaches to existing process
+  
+  ~detach~ detaches
+  
+* Multithreaded programs
+** Misc
+   ~thread apply~
+   
+* Checkpoints
+  #+BEGIN_SRC 
+  checkpoint
+  info checkpoints
+  restart checkpoint-id
+  delete checkpoint checkpoint-id
+  #+END_SRC
+  On some systems such as gnu/Linux, address space randomization is performed on new
+  processes for security reasons. This makes it difficult or impossible to set a breakpoint, or
+  watchpoint, on an absolute address if you have to restart the program, since the absolute
+  location of a symbol will change from one execution to the next.46
+  Debugging with gdb
+  A checkpoint, however, is an identical copy of a process. Therefore if you create a
+  checkpoint at (eg.) the start of main, and simply return to that checkpoint instead of
+  restarting the process, you can avoid the effects of address randomization and your symbols
+  will all stay in the same place.
+* Breaking
+** Breakpoints
+   #+BEGIN_SRC 
+break ... if ...
+   #+END_SRC
+   One-shot breakpoint:
+   #+BEGIN_SRC 
+tbreak ...
+   #+END_SRC
+   Break on regex function name (grep-like regex):
+   #+BEGIN_SRC 
+rbreak regex
+   #+END_SRC
+   Match only specific file:
+   #+BEGIN_SRC 
+rbreak file:regex
+   #+END_SRC
+
+   All variants have single-shot versions
+    
+   ~ignore~ allows to ignore `n` breakpoint hits
+
+   ~<MULTIPLE>~ in breakpoint info shows that it breaks on several program counters
+***    Enable/disable
+    #+BEGIN_SRC 
+enable/disable breakpoint
+    #+END_SRC
+    can enable/disable ranges
+** Watchpoints
+   #+BEGIN_SRC 
+   watch [-l] expr [thread thread-id] [mask maskvalue]
+   #+END_SRC
+   ~-l~ watches location, independent of scope.
+   ~thread~ only works with hardware watchpoints
+    
+* Misc
+** Interesing about breakpoints
+   gdb normally implements breakpoints by replacing the program code at the breakpoint
+   address with a special instruction, which, when executed, given control to the debugger.
+   By default, the program code is so modified only when the program is resumed. As soon as
+   the program stops, gdb restores the original instructions. This behaviour guards against
+   leaving breakpoints inserted in the target should gdb abrubptly disconnect. However, with
+   slow remote targets, inserting and removing breakpoint can reduce the performance. This
+   behavior can be controlled with the following commands::
+   #+BEGIN_SRC 
+set breakpoint always-inserted ...
+   #+END_SRC

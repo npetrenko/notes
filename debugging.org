@@ -1,3 +1,5 @@
+* Vocab
+  "convenience variables"
 * Optimization attributes
 ** Per-function levels
    One might disable function optimization by :
