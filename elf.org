@@ -1,0 +1,23 @@
+Entry point is located in header: ~p_entry~
+
+~e_shoff~ -- offset of section header table, ~e_shnum~ -- number of header entries
+
+* Section header entry
+~sh_name~ offset to a string in ~.shstrtab~ which represents section name
+
+~sh_flags~: ~SHF_ALLOC~ -- occupies memory during execution; ~SHF_EXECINSTR~ -- executable
+
+~sh_addr~: Virtual address of the section in memory, for sections that are loaded.
+~sh_offset~: Offset of the section in the file image.
+~sh_size~: Size in bytes of the section in the file image. May be 0.
+
+~sh_link~: ???
+
+~sh_addralign~: required alignment
+
+~sh_entsize~: ???
+
+* Utils
+** readelf
+** elfdump
+** objdump
