@@ -1,0 +1,8 @@
+* TSAN
+** suppress deadlock
+#+BEGIN_SRC bash
+  export TSAN_OPTIONS="detect_deadlocks=false"
+#+END_SRC
+** docs
+   https://github.com/google/sanitizers/wiki/ThreadSanitizerFlags
+   https://github.com/google/sanitizers/wiki

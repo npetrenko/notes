@@ -91,3 +91,6 @@ enable/disable breakpoint
    #+BEGIN_SRC 
 set breakpoint always-inserted ...
    #+END_SRC
+* Disassm
+** DA arbitrary location
+   =x/ni addr=, n stands for the number of instructions

@@ -1,23 +1,102 @@
-Entry point is located in header: ~p_entry~
+Everything is in bytes
 
-~e_shoff~ -- offset of section header table, ~e_shnum~ -- number of header entries
+Entry point is located in header: ~p_entry~.  Virtual address of entry point,
+not an offset into the file
+
+~e_shoff~ -- offset of section header table, ~e_shnum~ -- number of header
+entries, ~e_shensize~ -- size of every header table entry (in bytes)
+
+~e_shstrndx~ -- index in section header table of entry associated with the
+section name string table
+
+* Program header entry
+  Describes how to load elf into memory for execution. Is only sensible for
+  executable and ~.so~ files
 
 * Section header entry
-~sh_name~ offset to a string in ~.shstrtab~ which represents section name
+** Entry consists of
+*** ~sh_name~ 
+    offset to a string in ~.shstrtab~ which represents section name
 
-~sh_flags~: ~SHF_ALLOC~ -- occupies memory during execution; ~SHF_EXECINSTR~ -- executable
+*** ~sh_flags~
+    1. ~SHF_ALLOC~ -- occupies memory during execution
+    2. ~SHF_EXECINSTR~ -- executable
 
-~sh_addr~: Virtual address of the section in memory, for sections that are loaded.
-~sh_offset~: Offset of the section in the file image.
-~sh_size~: Size in bytes of the section in the file image. May be 0.
+*** ~sh_addr~
+    Virtual address of the section in memory, for sections that are loaded.
+   
+    Otherwise, zero.
 
-~sh_link~: ???
+*** ~sh_offset~
+    Offset of the section in the file image.
 
-~sh_addralign~: required alignment
+*** ~sh_size~
+    Size in bytes of the section in the file image. Might be 0.
+   
+    If section's type is ~SHT_NOBITS~, then it occupies no space in .elf, though its
+    size might me non-zero (e.g. .bss).
 
-~sh_entsize~: ???
+*** ~sh_link~
+    ???
+
+*** ~sh_addralign~
+    required alignment
+
+*** ~sh_entsize~
+    size of a single entry in the table. All entries have the same size.
+
+** Some significant entry types
+*** .bss
+    uninitialized (aka zero-initialized) data that contributes to program's memory
+    image.
+
+*** .ctors
+    some C++ stuff -- pointers to constructors (???)
+
+*** .data
+    data that is non-zero
+*** .data1
+    same shit, idk the difference
+
+*** .debug
+    debug symbols
+
+*** .dtors
+    pointers to destructors
+
+*** .dym...
+    stuff for dynamic linking
+
+*** .fini
+    executable instructions which contribute to process terminating code.
+
+*** .got
+    global offset table
+
+*** .init
+    instructions for process initialization
+
+*** .line
+    line info for debugging. Unspecified contents.
+
+*** .note.ABI-tag
+    expected run-time ABI of elf image
+
+*** .plt
+    procedure linkage table
+
+*** .relNAME
+    relocation info for section NAME
+
+*** .rodata
+*** .shstrtab
+*** .symtab
+    symbol table
+*** .text
+    executable instructions
+
 
 * Utils
-** readelf
-** elfdump
-** objdump
+1. readelf
+2. elfdump
+3. objdump

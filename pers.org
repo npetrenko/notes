@@ -1,0 +1,17 @@
+* perf
+** Basic
+  `-a` for "all cpus"
+#+BEGIN_SRC bash
+  perf record --call-graph=dwarf -e 'event_regexp' -a -p $(pidof procname)
+#+END_SRC
+** useful counters
+*** iommu:map
+*** iommu:unmap
+*** kmem
+**** kfree
+**** kmalloc
+**** ...
+*** syscalls
+**** sys_enter_mmap
+**** sys_enter_munmap
+**** sys_enter_write
